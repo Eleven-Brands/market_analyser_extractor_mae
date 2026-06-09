@@ -1,0 +1,225 @@
+{
+  "paths": {
+    "input_folder": "G:/Shared drives/OrganiHaus/3.1 - OH Data & Reports/z_personal_folders/lucca_lanzellotti/Projetos/MAE/Projeto MAE/Input/Listing Tracker",
+    "output_folder": "G:/Shared drives/OrganiHaus/3.1 - OH Data & Reports/z_personal_folders/lucca_lanzellotti/Projetos/MAE/Projeto MAE/Output/Variations",
+    "log_folder": "G:/Shared drives/OrganiHaus/3.1 - OH Data & Reports/z_personal_folders/lucca_lanzellotti/Projetos/MAE/Projeto MAE/Logs",
+    "competitors_file": "G:/Shared drives/OrganiHaus/3.1 - OH Data & Reports/market_analyser_extractor_mae/MAE Competitors - Editado v3.xlsx",
+    "products_file": "G:/Shared drives/OrganiHaus/01 - OH Sourcing and Orders/01.1 - Suppliers - Active/Product Information and Pricing Database.xlsx"
+  },
+  "input_file_name": "OH_Products.csv",
+  "output_file_name_certo": "OUTPUT_MAE.csv",
+  "output_file_name": "OUTPUT_MAE_tstCoupon.csv",
+  "full_output_file_name": "FULL_OUTPUT_FILE.csv",
+
+  "default_xpaths": {
+        "product_title":       { "by": "XPATH", "value": ".//span[@id='productTitle']" },
+        "number_of_ratings":   { "by": "XPATH", "value": "//span[@id='acrCustomerReviewText']" },
+        "stock":               { "by": "XPATH", "value": "//div[@id='availability']" },
+        "rating_stars":        { "by": "XPATH", "value": "//span[@class='a-icon-alt']" },
+        "brand":               { "by": "ID",    "value": "bylineInfo" },
+        "merchant":            { "by": "ID",    "value": "sellerProfileTriggerId" },
+        "product_category_gl": { "by": "ID",    "value": "productCategory" },
+        "product_category":    { "by": "ID",    "value": "wayfinding-breadcrumbs_feature_div" },
+        "product_category_links": { "by": "XPATH", "value": "//div[@id='wayfinding-breadcrumbs_feature_div']//a" },
+        "asin_product_page":   { "by": "XPATH", "value": "//div[@id='prodDetails']//tr[th[contains(text(), 'ASIN')]]/td" },
+        "features":            { "by": "XPATH", "value": "//*[@id='feature-bullets']/ul/li/span" },
+        "price_container":     { "by": "CSS_SELECTOR", "value": "#corePriceDisplay_desktop_feature_div" },
+        "price_whole":         { "by": "CSS_SELECTOR", "value": "span.a-price-whole" },
+        "price_fraction":      { "by": "CSS_SELECTOR", "value": "span.a-price-fraction" },
+        "list_price":          { "by": "XPATH", "value": "//span[contains(@class, 'a-price a-text-price') and @data-a-strike='true']" },
+        "badge_ac_primary":    { "by": "XPATH", "value": "//span[@class='ac-badge-text-primary ac-white']" },
+        "badge_ac_secondary":  { "by": "XPATH", "value": "//span[@class='ac-badge-text-secondary ac-orange']" },
+        "badge_ac_for":        { "by": "XPATH", "value": "//span[@class='ac-for-text']" },
+        "badge_bs_icon":       { "by": "XPATH", "value": "//i[@class='a-icon a-icon-addon p13n-best-seller-badge']" },
+        "badge_bs_cat":        { "by": "XPATH", "value": "//span[@class='cat-link']" },
+        "limited_time_deal":   { "by": "ID",    "value": "dealBadgeSupportingText" },
+        "prime_day_deal":      { "by": "XPATH", "value": "//span[@class='pep-pday-badge']" },
+        "ped_secondary":       { "by": "ID",    "value": "primeExclusivePricingMessage" },
+        "prev_month_qty":      { "by": "XPATH", "value": "//*[@id='social-proofing-faceout-title-tk_bought']/span[1]" },
+        "freq_returned_badge": { "by": "XPATH", "value": "//*[@id='NEW_1_nostos_badge']/div/div/div/h5/p/span" },
+        "coupon":              { "by": "CSS_SELECTOR", "value": ".promoPriceBlockMessage" },
+        "bsr_container":       { "by": "ID", "value": "productDetails_detailBullets_sections1" },
+        "color_name": [
+          { "by": "CSS_SELECTOR", "value": "#inline-twister-expanded-dimension-text-color_name" },
+          { "by": "CSS_SELECTOR", "value": "#variation_color_name > div.a-row > span" },
+          { "by": "XPATH", "value": "//*[@id='inline-twister-expanded-dimension-text-color_name']" },
+          { "by": "XPATH", "value": "//*[@id='variation_color_name']/div[1]/span" }
+        ],
+        "size_name": [
+          { "by": "CSS_SELECTOR", "value": "#inline-twister-expanded-dimension-text-size_name" },
+          { "by": "CSS_SELECTOR", "value": "#variation_size_name > div.a-row > span" },
+          { "by": "XPATH", "value": "//*[@id='inline-twister-expanded-dimension-text-size_name']" },
+          { "by": "XPATH", "value": "//*[@id='variation_size_name']/div[1]/span" }
+        ]
+      },
+
+  "marketplaces": {
+    "US": {
+      "name": "United States",
+      "sales_region_code": "US",
+      "language_code": "en-US",
+      "domain": "amazon.com",
+      "base_url": "https://www.amazon.com/dp/",
+      "zip_code": "10001",
+      "bsr_search_text": "Best Sellers Rank",
+      "text_replacements": {
+        "brand_prefix": "Visit the ",
+        "brand_suffix": " Store"
+      },
+      "xpaths": {
+        "date_created":        { "by": "XPATH", "value": "//div[@id='prodDetails']//tr[th[contains(text(), 'Date First Available')]]/td" },
+        "ped": [
+          { "by": "XPATH", "value": "//span[@class='a-size-base'][contains(., 'exclusively for Amazon Prime members')]" },
+          { "by": "ID",    "value": "primeExclusivePricingMessage" }
+        ]
+      }
+    },
+
+    "CA": {
+      "name": "Canada",
+      "sales_region_code": "CA",
+      "language_code": "en-CA",
+      "domain": "amazon.ca",
+      "base_url": "https://www.amazon.ca/dp/",
+      "zip_code": "A1A 1A1",
+      "bsr_search_text": "Best Sellers Rank",
+      "text_replacements": {
+        "brand_prefix": "Visit the ",
+        "brand_suffix": " Store"
+      },
+      "xpaths": {
+        "date_created":        { "by": "XPATH", "value": "//div[@id='prodDetails']//tr[th[contains(text(), 'Date First Available')]]/td" },
+        "ped": [
+          { "by": "XPATH", "value": "//span[@class='a-size-base'][contains(., 'exclusively for Amazon Prime members')]" },
+          { "by": "ID",    "value": "primeExclusivePricingMessage" }
+        ]
+      }
+      },
+
+    "DE": {
+      "name": "Germany",
+      "sales_region_code": "EU" ,
+      "language_code": "de-DE",
+      "domain": "amazon.de",
+      "base_url": "https://www.amazon.de/dp/",
+      "zip_code": "10115",
+      "bsr_search_text": "Amazon Bestseller-Rang",
+      "text_replacements": {
+        "brand_prefix": "Besuche den ",
+        "brand_suffix": "-Store"
+      },
+      "xpaths": {
+        "date_created":        { "by": "XPATH", "value": "//div[@id='prodDetails']//tr[th[contains(text(), 'Im Angebot von Amazon.de seit')]]/td" },
+        "ped": [
+          { "by": "XPATH", "value": "//span[@class='a-size-base'][contains(., 'Preis gilt ausschließlich für Prime-Mitglieder')]" },
+          { "by": "ID",    "value": "primeExclusivePricingMessage" }
+        ]
+      }
+    },
+
+    "GB": {
+      "name": "United Kingdom",
+      "sales_region_code": "GB",
+      "language_code": "en-GB",
+      "domain": "amazon.co.uk",
+      "base_url": "https://www.amazon.co.uk/dp/",
+      "zip_code": "W2 4RT",
+      "bsr_search_text": "Best Sellers Rank",
+      "text_replacements": {
+        "brand_prefix": "Visit the ",
+        "brand_suffix": " Store"
+      },
+      "xpaths": {
+        "date_created": { "by": "XPATH", "value": "//th[contains(text(), 'Date first available')]/following-sibling::td" },
+        "ped": [
+          { "by": "XPATH", "value": "//span[@class='a-size-base'][contains(., 'exclusively for Amazon Prime members')]" },
+          { "by": "ID",    "value": "primeExclusivePricingMessage" }
+        ]
+      }
+    },
+
+    "MX": {
+      "name": "Mexico",
+      "sales_region_code": "MX",
+      "language_code": "es-MX",
+      "domain": "amazon.com.mx",
+      "base_url": "https://www.amazon.com.mx/dp/",
+      "zip_code": "01000",
+      "bsr_search_text": "Clasificación en los más vendidos de Amazon",
+      "text_replacements": {
+        "brand_prefix": "Visita la tienda de ",
+        "brand_suffix": ""
+      },
+      "xpaths": {
+        "date_created": { "by": "XPATH", "value": "//div[@id='prodDetails']//tr[th[contains(text(), 'Producto en Amazon.com.mx desde')]]/td" },
+        "ped": [
+          { "by": "XPATH", "value": "//span[@class='a-size-base'][contains(., 'Prime')]" },
+          { "by": "ID",    "value": "primeExclusivePricingMessage" }
+        ]
+      }
+    },
+
+    "ES": {
+      "name": "Spain",
+      "sales_region_code": "EU",
+      "language_code": "es-ES",
+      "domain": "amazon.es",
+      "base_url": "https://www.amazon.es/dp/",
+      "zip_code": "28001",
+      "bsr_search_text": "Clasificación en los más vendidos de Amazon",
+      "text_replacements": {
+        "brand_prefix": "Visita la tienda de ",
+        "brand_suffix": ""
+      },
+      "xpaths": {
+        "date_created": { "by": "XPATH", "value": "//div[@id='prodDetails']//tr[th[contains(text(), 'Producto en Amazon.es desde')]]/td" },
+        "ped": [
+          { "by": "XPATH", "value": "//span[@class='a-size-base'][contains(., 'Prime')]" },
+          { "by": "ID",    "value": "primeExclusivePricingMessage" }
+        ]
+      }
+    },
+
+    "FR": {
+      "name": "France",
+      "sales_region_code": "EU",
+      "language_code": "fr-FR",
+      "domain": "amazon.fr",
+      "base_url": "https://www.amazon.fr/dp/",
+      "zip_code": "75001",
+      "bsr_search_text": "Classement des meilleures ventes d'Amazon",
+      "text_replacements": {
+        "brand_prefix": "Visiter la boutique ",
+        "brand_suffix": ""
+      },
+      "xpaths": {
+        "date_created": { "by": "XPATH", "value": "//div[@id='prodDetails']//tr[th[contains(text(), 'Date de mise en ligne sur Amazon.fr')]]/td" },
+        "ped": [
+          { "by": "XPATH", "value": "//span[@class='a-size-base'][contains(., 'Prime')]" },
+          { "by": "ID",    "value": "primeExclusivePricingMessage" }
+        ]
+      }
+    },
+
+    "IT": {
+      "name": "Italy",
+      "sales_region_code": "EU",
+      "language_code": "it-IT",
+      "domain": "amazon.it",
+      "base_url": "https://www.amazon.it/dp/",
+      "zip_code": "00161",
+      "bsr_search_text": "Posizione nella classifica Bestseller di Amazon",
+      "text_replacements": {
+        "brand_prefix": "Visita lo Store di ",
+        "brand_suffix": ""
+      },
+      "xpaths": {
+        "date_created": { "by": "XPATH", "value": "//div[@id='prodDetails']//tr[th[contains(text(), 'Disponibile su Amazon.it a partire dal')]]/td" },
+        "ped": [
+          { "by": "XPATH", "value": "//span[@class='a-size-base'][contains(., 'riservata esclusivamente ai clienti Prime')]" },
+          { "by": "ID",    "value": "primeExclusivePricingMessage" }
+        ]
+      }
+    }
+  }
+}

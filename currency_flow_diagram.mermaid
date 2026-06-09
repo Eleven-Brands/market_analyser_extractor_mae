@@ -1,0 +1,44 @@
+graph TD
+    A[Início do Scraping] --> B[Navegar para Produto]
+    B --> C{ZIP correto?}
+    C -->|Não| D[Reaplicar ZIP]
+    D --> C
+    C -->|Sim| E[Extrair Moeda do XPath]
+    
+    E --> F{Elemento encontrado?}
+    F -->|Não| G[⚠️ Log: Elemento não encontrado]
+    G --> H[Continuar sem validação]
+    
+    F -->|Sim| I[Normalizar Moeda<br/>USD→$ GBP→£ EUR→€]
+    I --> J{Moeda == Esperada?}
+    
+    J -->|Sim| K[✅ Moeda Correta]
+    K --> L[Continuar Scraping]
+    
+    J -->|Não| M[❌ Moeda Incorreta]
+    M --> N[Tentativa 1/3:<br/>Reaplicar ZIP]
+    
+    N --> O[Aguardar 3 segundos]
+    O --> P[Validar Moeda Novamente]
+    
+    P --> Q{Moeda corrigida?}
+    Q -->|Sim| R[✅ Correção Bem-Sucedida]
+    R --> L
+    
+    Q -->|Não| S{Tentativas < 3?}
+    S -->|Sim| T[Próxima Tentativa]
+    T --> N
+    
+    S -->|Não| U[❌ FALHA: Não corrigiu]
+    U --> V[⚠️ Log: Moeda Permanece Incorreta]
+    V --> L
+    
+    L --> W[Scraping de Dados]
+    W --> X[Fim]
+    
+    style K fill:#90EE90
+    style R fill:#90EE90
+    style M fill:#FFB6C1
+    style U fill:#FF6B6B
+    style V fill:#FFA500
+    style G fill:#FFA500

@@ -1,0 +1,21 @@
+# Logs
+*.log
+*.pid
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Backups (kept locally, não versionar)
+scraper/*_backup.py
+scraper/*copy*.py
+run_scraper copy.py
+
+# Input data (gerado dinamicamente)
+input/
+
+# Dados sensíveis / credenciais
+.env
+credentials*.json
+service_account*.json

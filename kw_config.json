@@ -1,0 +1,40 @@
+{
+  "paths": {
+    "input_folder": "G:/Shared drives/OrganiHaus/3.1 - OH Data & Reports/z_personal_folders/lucca_lanzellotti/Projetos/MAE/Projeto MAE/Input/Keywords",
+    "output_folder": "G:/Shared drives/OrganiHaus/3.1 - OH Data & Reports/z_personal_folders/lucca_lanzellotti/Projetos/MAE/Projeto MAE/Output/KW",
+    "log_folder": "G:/Shared drives/OrganiHaus/3.1 - OH Data & Reports/z_personal_folders/lucca_lanzellotti/Projetos/MAE/Projeto MAE/Logs"
+  },
+  "settings": {
+    "keyword_input_file": "US_KW_INPUT.csv",
+    "keyword_output_file": "OUTPUT_MAE_KW.csv",
+    "max_pages_to_scan": 3
+  },
+  "marketplaces": {
+    "US": {
+      "name": "United States",
+      "sales_region_code": "US",
+      "language_code": "en-US",
+      "domain": "amazon.com",
+      "zip_code": "10001",
+      "search_texts": {
+        "sponsored_text": "Sponsored",
+        "bought_text": "bought in past month",
+        "coupon_suffix_text": "with coupon"
+      },
+      "kw_xpaths": {
+        "search_bar":               { "by": "ID", "value": "twotabsearchtextbox" },
+        "search_results_container": { "by": "XPATH", "value": "//div[contains(@class, 's-result-item') and @data-asin]" },
+        "result_asin_attribute":    "data-asin",
+        "sponsored_tag":            { "by": "XPATH", "value": ".//span[contains(text(), 'Sponsored')]" },
+        "total_results_text":       { "by": "XPATH", "value": "//div[contains(@class, 'a-section a-spacing-small a-spacing-top-small')]/span[1]" },
+        "next_page_button":         { "by": "XPATH", "value": "//a[contains(@class, 's-pagination-next')]" },
+        "bought_past_month":        { "by": "XPATH", "value": ".//span[contains(text(), 'bought in past month')]" },
+        "num_reviews":              { "by": "XPATH", "value": ".//span[@class='a-size-base s-underline-text']" },
+        "price":                    { "by": "XPATH", "value": ".//span[@class='a-price']" },
+        "top_badge":                { "by": "CSS_SELECTOR", "value": "span.a-badge-label-inner" },
+        "coupon_badge":             { "by": "CSS_SELECTOR", "value": "span.s-coupon-unclipped" },
+        "deal_badge":               { "by": "CSS_SELECTOR", "value": "span.a-badge-text" }
+      }
+    }
+  }
+}
