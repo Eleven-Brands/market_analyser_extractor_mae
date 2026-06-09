@@ -12,10 +12,17 @@ def _is_valid_asin(value):
     return bool(_ASIN_PATTERN.match(value.strip()))
 
 
+# U+FFFD replacement char, U+FEFF BOM, U+200B-200F zero-width/directional, U+00AD soft hyphen
+_INVISIBLE_CHARS = re.compile('[\ufffd\ufeff\u200b\u200c\u200d\u200e\u200f\u00ad]')
+
+
 def clean_text_field(text):
     """Remove caracteres que podem quebrar o formato CSV."""
     if not isinstance(text, str):
         return text
+
+    # Remove replacement char e invisíveis que a Amazon injeta no DOM
+    text = _INVISIBLE_CHARS.sub('', text)
 
     # Remove quebras de linha e tabs
     text = text.replace('\n', ' ').replace('\r', '').replace('\t', ' ')
@@ -27,6 +34,7 @@ def clean_text_field(text):
     text = text.replace('"', "'")
 
     return text.strip()
+
 
 
 def _sanitize_escapes(value):

@@ -145,16 +145,6 @@ def scrape_single_product(driver, url, asin, marketplace_code, xpaths, replaceme
     data['DOW'] = 'Not Found'
     data['Product Category Nodes'] = 'Not Found'
 
-    # ✨ NOVO CAMPO: Freq Badge
-    data['Freq Badge'] = 'Not Found'
-    try:
-        freq_badge_element = driver.find_element(By.XPATH, '//*[@id="NEW_1_nostos_badge"]')
-        data['Freq Badge'] = freq_badge_element.text.strip() if freq_badge_element.text else 'Not Found'
-    except NoSuchElementException:
-        pass
-    except Exception as e:
-        print(f"Debug (Freq Badge): Erro ao extrair para ASIN {asin}: {e}")
-
     rating_text = find_with_fallback(xpaths['rating_stars'], get_attribute='innerHTML')
     rating_text_cleaned = rating_text.replace(',', '.')
     match = re.search(r'\d+\.?\d*', rating_text_cleaned)
