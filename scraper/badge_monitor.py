@@ -1,6 +1,5 @@
 # scraper/badge_monitor.py
 import os
-import csv
 import re
 import warnings
 import pandas as pd
@@ -10,7 +9,7 @@ _BQ_VIEW = 'amazon-sp-api-openbridge.2_Silver_Aux.vw_all_listings_report_last_da
 
 MONITORED_FIELDS = ['Badge', 'Limited Time Deal', 'Deal', 'Coupon', 'Stock']
 
-_EVENTS_FILENAME = 'badge_events.csv'
+_EVENTS_FILENAME = 'badge_events.xlsx'
 _EVENTS_FIELDNAMES = ['Date', 'ASIN', 'Country', 'SKU', 'Field', 'Value_before', 'Value_after', 'Change_type']
 
 # Stock normalization rules: (category, list_of_regex_patterns)
@@ -130,15 +129,16 @@ def _detect_changes(today_df, prev_df, asin_sku_map):
 
 
 def _write_events(events_file, events, run_date):
-    """Append events to badge_events.csv, adding header if file is new."""
-    file_exists = os.path.exists(events_file)
-    with open(events_file, 'a', newline='', encoding='utf-8') as f:
-        writer = csv.DictWriter(f, fieldnames=_EVENTS_FIELDNAMES)
-        if not file_exists:
-            writer.writeheader()
-        for ev in events:
-            ev['Date'] = run_date
-        writer.writerows(events)
+    """Append events to badge_events.xlsx (read-modify-write)."""
+    for ev in events:
+        ev['Date'] = run_date
+    df_new = pd.DataFrame(events, columns=_EVENTS_FIELDNAMES)
+    if os.path.exists(events_file):
+        df_existing = pd.read_excel(events_file, dtype=str)
+        df_final = pd.concat([df_existing, df_new], ignore_index=True)
+    else:
+        df_final = df_new
+    df_final.to_excel(events_file, index=False, engine='openpyxl')
 
 
 def run(config_data, marketplace_code):

@@ -16,8 +16,6 @@ ATENÇÃO: sobrescreve o badge_events.csv existente.
 """
 import sys
 import os
-import csv
-import warnings
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -40,7 +38,7 @@ def main():
         config['paths']['output_folder'],
         config.get('output_file_name', 'OUTPUT_FILE.csv')
     )
-    events_file = os.path.join(config['paths']['log_folder'], 'badge_events.csv')
+    events_file = os.path.join(config['paths']['log_folder'], 'badge_events.xlsx')
 
     # Carrega OUTPUT_FILE.csv uma vez (apenas colunas necessárias)
     print('Carregando OUTPUT_FILE.csv...')
@@ -101,13 +99,11 @@ def main():
 
         print(f'  {count} eventos')
 
-    # Sobrescreve badge_events.csv
-    with open(events_file, 'w', newline='', encoding='utf-8') as f:
-        writer = csv.DictWriter(f, fieldnames=_EVENTS_FIELDNAMES)
-        writer.writeheader()
-        writer.writerows(all_events)
+    # Sobrescreve badge_events.xlsx
+    ev_df = pd.DataFrame(all_events, columns=_EVENTS_FIELDNAMES) if all_events else pd.DataFrame(columns=_EVENTS_FIELDNAMES)
+    ev_df.to_excel(events_file, index=False, engine='openpyxl')
 
-    print(f'\nTotal: {len(all_events)} eventos gravados em badge_events.csv')
+    print(f'\nTotal: {len(all_events)} eventos gravados em badge_events.xlsx')
 
     if all_events:
         ev_df = pd.DataFrame(all_events)
