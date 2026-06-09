@@ -10,6 +10,13 @@ import requests
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
+# Carrega variáveis do arquivo .env local (se existir) — não afeta vars já definidas no sistema
+try:
+    from dotenv import load_dotenv
+    load_dotenv(override=False)
+except ImportError:
+    pass
+
 # === CONFIGURAÇÃO DE NOTIFICAÇÕES ===
 # Slack (mantido por compatibilidade)
 SLACK_TOKEN = os.getenv('SLACK_TOKEN', '')
