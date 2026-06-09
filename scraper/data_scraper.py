@@ -134,7 +134,6 @@ def scrape_single_product(driver, url, asin, marketplace_code, xpaths, replaceme
     data['Limited Time Deal'] = find_with_fallback(xpaths['limited_time_deal'])
     data['Prime'] = find_with_fallback(xpaths['prime_day_deal'])
     data['Prev Month Qty'] = find_with_fallback(xpaths['prev_month_qty'])
-    data['Frequently Returned'] = find_with_fallback(xpaths['freq_returned_badge'])
     data['Coupon'] = find_with_fallback(xpaths['coupon'])
     data['Deal'] = find_with_fallback(xpaths['deal'])
     data['PED'] = find_with_fallback(xpaths['ped'])
